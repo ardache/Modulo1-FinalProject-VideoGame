@@ -1,33 +1,37 @@
 // CONFIGURACION
-// 1.0Variables
-// 1.1Stage
+// 1.0 Variables
+// 1.1 Stage
 
-// 2.0Constantes
+// 2.0 Constantes
 
 
 // CLASES Y METODOS
-// 1.0Jugadores
-// 1.1Hombre
-// 1.2Mujer
-// 1.3Niño
-// 1.4Anciano
+// 1.0 Jugadores
+// 1.1 Hombre
+// 1.2 Mujer
+// 1.3 Niño
+// 1.4 Anciano
 
-// 2.0Objetos
-// 2.1Botella
-// 2.2Musica
-// 2.3Monedas
-// 2.4Anillo
+// Level 1
+// 2.0 Objetos
+// 2.1 NE Botella
+// 2.2 NE Musica
+// 2.3 Monedas
+// 2.4 DM Anillo
 
-// 2.5Amante
-// 2.6Sarten
-// 2.7Bebe
+//Level 2
+// 2.5 HD Accidente
+// 2.6 HD Sarten
+// 2.7 DM Bebe
 
-// 2.8Colegiatura
-// 2.9Enfermedad
-// 2.10Rodilla
+//Level 3
+// 2.8 NE Colegiatura
+// 2.9 HD Enfermedad
+// 2.10 DM Rodilla
 
-// 2.11Medicina
-// 2.12Muerte
+//Level 4
+// 2.11 Medicina
+// 2.12 DM Muerte
 
 
 // INSTANCIAS
