@@ -4,14 +4,11 @@ let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d')
 let interval;
 let frames = 0;
-
 canvas.width = 900;
 canvas.height = 500;
 
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-ctx.fillStyle = 'pink';
-ctx.fillRect(5, 5, 60, 60);
-console.log(canvas)
+let arrayOfBadness =[];
+
 
 // 1.1 Stage
 
@@ -22,6 +19,20 @@ console.log(canvas)
 // 1.0 JUGADORES
 
 // 1.1 Hombre
+class Hombre {
+    constructor(x,y,w,h){
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.yearsOld = 25;
+        this.speed = 5;
+    }
+    draw() {
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(this.x, this.y, this.w, this.h);
+    }
+}
 // 1.2 Mujer
 // 1.3 Niño
 // 1.4 Anciano
@@ -46,7 +57,7 @@ class ObjectBankUp {
         this.gameover = 0;
     }
     draw() {
-        this.x += this.speed;
+        this.y += this.speed;
         ctx.fillStyle = 'red';
         ctx.fillRect(this.x, this.y, this.w, this.h);
     }
@@ -76,22 +87,52 @@ class ObjectBankUp {
 
 // INSTANCIAS
 // crearJugador
-
+let player = new Hombre(375,800,50,100);
 
 // FUNCIONES COMPLEMENTARIAS
 
 // GenerarObjetos
+function generateBadness() {
+    if(frames % 100 === 0) {
+        arrayOfBadness.push(new ObjectBankUp(50,10,60,60));
+    }
+}
+
 // DibujarObjetos
+function drawBadness() {
+    arrayOfBadness.forEach((badness, ei) => {
+        badness.draw();
+    });
+}
 // RevisarColision
 
 
 // FUNCIONES PRINCIPALES
 
 // GameOver
-// Main
+
+// ==::: MAIN  :::==
+
+// ctx.clearRect(0, 0, canvas.width, canvas.height);
+// ctx.fillStyle = 'pink';
+// ctx.fillRect(5, 5, 60, 60);
+// console.log(canvas)
+
+function GameHart() {
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    generateBadness();
+    drawBadness();
+    player.draw();
+    //checkCollition();
+    //gameOver();
+    frames++;
+}
 
 
 // EVENTOS 
+
+// //Intervalo del Juego
+interval = setInterval(GameHart, 1000/60);
 
 // KeyListener
 
