@@ -8,6 +8,20 @@ let frames = 0;
 canvas.width = 900;
 canvas.height = 500;
 let level = 1;
+let arrayBnkImgL1 = ['./img/bottle.png','./img/music.png']
+let arrayBnkImgL2 = ['./img/colegiatura.png','./img/medicina.png']
+let arrayBnkImgL3 = ['./img/medicina.png','./img/colegiatura.png']
+let arrayBnkImgL4 = ['./img/medicina.png']
+
+let arrayBnkCovImgL1 = ['./img/enfermedad.png']
+let arrayBnkCovImgL2 = ['./img/accidente.png','./img/sarten.png','./img/enfermedad.png']
+let arrayBnkCovImgL3 = ['./img/accidente.png','./img/sarten.png','./img/enfermedad.png']
+let arrayBnkCovImgL4 = ['./img/accidente.png','./img/enfermedad.png']
+
+let arrayBnkLvlImgL1 = ['./img/bebe.png']
+let arrayBnkLvlImgL2 = ['./img/anillo.png']
+let arrayBnkLvlImgL3 = ['./img/rodilla.png',]
+let arrayBnkLvlImgL4 = ['./img/muerte.png',]
 
 let arrayOfBadness =[];
 
@@ -61,27 +75,25 @@ class ObjectOfBadness {
 }
 
 class Coin extends ObjectOfBadness {
-    constructor (x,y,w,h, img, spd, bnk, cvg, lvl, dead) {
+    constructor (x,y,w,h, img, spd, bnk, cvg, dead) {
         super(x,y,w,h)
         this.image = img //'./img/coin.png'
         this.speed = spd;
         this.bank = bnk;
         this.coverage = cvg;
-        this.level = lvl;
         this.gameover = dead;
     }
 }
 
 // BANK -
 // 2.1 BANK- (LEVEL 1) ::: Botella :::
-class Bottle extends ObjectOfBadness {
-    constructor (x,y,w,h, img, spd, bnk, cvg, lvl, dead) {
+class Damage extends ObjectOfBadness {
+    constructor (x,y,w,h, img, spd, bnk, cvg, dead) {
         super(x,y,w,h)
         this.image = img //'./img/bottle.png'
         this.speed = spd;
         this.bank = bnk;
         this.coverage = cvg;
-        this.level = lvl;
         this.gameover = dead;
     }
 }
@@ -92,7 +104,7 @@ class Bottle extends ObjectOfBadness {
 // COVERAGE -
 // 2.5 BANK- COVERAGE- (LEVEL 2,3,4) ::: Accidente :::
 // 2.6 BANK- COVERAGE- (LEVEL 2,3) ::: Sarten :::
-// 2.9 BANK- COVERAGE- (LEVEL 2,3,4) ::: Enfermedad :::
+// 2.9 BANK- COVERAGE- (LEVEL 1,2,3,4) ::: Enfermedad :::
 
 // LEVEL +
 // 2.7 BANK - LEVEL+ (LEVEL 1) ::: Bebe :::
@@ -140,14 +152,58 @@ class Estadisitca {
 
 // GenerarObjetos
 function generateBadness() {
-    if(frames % 200 === 0) {
-        arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,'./img/coin.png',hurryUp,1.5,0,1,0));
-    }
 
-    if(frames % 150 === 0) {
-        arrayOfBadness.push(new Bottle(Math.floor(Math.random()*canvas.width),0,30,60,'./img/bottle.png',hurryUp,-3.5,0,1,0));
-        
+    switch (level){
+        case 1:
+            if(frames % 200 === 0) {
+                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,'./img/coin.png',hurryUp,1.5,0,0));
+            }
+            if (frames % 150 === 0) {
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,30,60,arrayBnkImgL1[Math.floor(Math.random()*arrayBnkImgL1.length)],hurryUp,-3.5,0,0));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,70,10,arrayBnkCovImgL1[Math.floor(Math.random()*arrayBnkCovImgL1.length)],hurryUp,-3.5,250,0));
+            }
+            if (frames % 500 === 0) {
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,10,10,arrayBnkLvlImgL1[Math.floor(Math.random()*arrayBnkLvlImgL1.length)],hurryUp,-3.5,0,1));
+            }
+            break;
+        case 2:
+            if(frames % 200 === 0) {
+                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,'./img/coin.png',hurryUp,1.5,0,0));
+            }
+            if (frames % 150 === 0) {
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,50,20,arrayBnkImgL2[Math.floor(Math.random()*arrayBnkImgL2.length)],hurryUp,-3.5,0,0));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,40,10,arrayBnkCovImgL2[Math.floor(Math.random()*arrayBnkCovImgL2.length)],hurryUp,-3.5,250,0));
+            }
+            if (frames % 500 === 0) {
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,15,5,arrayBnkLvlImgL2[Math.floor(Math.random()*arrayBnkLvlImgL2.length)],hurryUp,-3.5,250,1));
+            }
+            break;
+        case 3:
+            if(frames % 200 === 0) {
+                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,'./img/coin.png',hurryUp,1.5,0,0));
+            }
+            if (frames % 150 === 0) {
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,70,10,arrayBnkImgL3[Math.floor(Math.random()*arrayBnkImgL3.length)],hurryUp,-3.5,0,0));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,90,80,arrayBnkCovImgL3[Math.floor(Math.random()*arrayBnkCovImgL3.length)],hurryUp,-3.5,250,0));
+            }
+            if (frames % 500 === 0) {     
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,10,10,arrayBnkLvlImgL3[Math.floor(Math.random()*arrayBnkLvlImgL3.length)],hurryUp,-3.5,250,1));
+            }
+            break;
+        case 4:
+                if (frames % 150 === 0) {
+                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,200,30,arrayBnkImgL4[Math.floor(Math.random()*arrayBnkImgL3.length)],hurryUp,-3.5,0,0));
+                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,250,50,arrayBnkCovImgL4[Math.floor(Math.random()*arrayBnkCovImgL3.length)],hurryUp,-3.5,250,0));
+                }
+                if (frames % 500 === 0) { 
+                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,50,50,arrayBnkLvlImgL4[Math.floor(Math.random()*arrayBnkLvlImgL3.length)],hurryUp,-3.5,250,1));
+                }
+                break;
+        default:
+            break;
+
     }
+    //console.log(arrayOfBadness.length)
 
 }
 
@@ -176,26 +232,32 @@ function LevelUp (){
         case 72: case 74: case 76: case 78:
         case 90: case 92: case 94: case 96: 
            hurryUp += 1
-           console.log("esto vale hurryup: " + hurryUp)
+           console.log("hurryup++ : " + hurryUp)
            break;
         case 43:
             //this.speed = 35
-            console.log('Subir al Nivel 2')
+            alert('Nivel 2')
             hurryUp = 1
+            level +=1
+            arrayOfBadness=[]
             break;
         case 61:
             //this.speed = 45
-            console.log('Subir al Nivel 3')
-            hurryUp = 1
+            alert('Nivel 3')
+            hurryUp = 2
+            level +=1
+            arrayOfBadness=[]
             break;
         case 79:
             //this.speed = 85
-            console.log('Subir al Nivel 4')
-            hurryUp = 1
+            alert('Nivel 4')
+            hurryUp = 2
+            level +=1
+            arrayOfBadness=[]
             break;
         case 97:
             //this.speed = 98
-            console.log('Game Over')
+            alert('Game Over & Estadisticas')
             clearInterval(interval)
             break;
         default:
@@ -243,34 +305,12 @@ document.addEventListener('keydown', function(e) {
     switch(e.keyCode){
         case 37:
             player.xp-=player.speed;
-            console.log('izq')
             break;
         case 39:
             player.xp+=player.speed;
-            console.log('der')
             break;
         default:
-            console.log('nada')
             break;
     }
 })
 
-
-// KeyListener
-// createKeyEvents(){
-//     document.onkeydown = (event) => {
-//         switch(event.which) {
-//         case 37:
-//             this.xp+=this.speed;
-//             console.log('izq')
-//             break;
-//         case 39:
-//             this.xp-=this.speed;
-//             console.log('der')
-//             break;
-//         default:
-//             console.log('nothing')
-//             break;
-//         }
-//     }
-// }
