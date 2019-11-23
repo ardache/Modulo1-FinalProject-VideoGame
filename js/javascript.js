@@ -1,16 +1,17 @@
 // CONFIGURACION
 // 1.0 Variables
-let canvas = document.querySelector('canvas');
-let ctx = canvas.getContext('2d');
+let canvas = document.querySelector('#canvas');
+let ctx = canvas.getContext('2d')
 let interval;
 let frames = 0;
 
-canvas.width = 600;
-canvas.height = 1000;
+canvas.width = 900;
+canvas.height = 500;
 
 ctx.clearRect(0, 0, canvas.width, canvas.height);
-ctx.fillStyle = 'black';
+ctx.fillStyle = 'pink';
 ctx.fillRect(5, 5, 60, 60);
+console.log(canvas)
 
 // 1.1 Stage
 
