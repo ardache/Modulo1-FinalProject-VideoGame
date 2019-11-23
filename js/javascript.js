@@ -7,6 +7,10 @@ let hurryUp = 1;
 let frames = 0;
 canvas.width = 900;
 canvas.height = 500;
+
+let acountBank = 150
+let polizaCoverage = 5000;
+
 let level = 1;
 let arrayBnkImgL1 = ['./img/bottle.png','./img/music.png']
 let arrayBnkImgL2 = ['./img/colegiatura.png','./img/medicina.png']
@@ -48,6 +52,12 @@ class Hombre {
     draw() {
         ctx.fillStyle = 'blue';
         ctx.fillRect(this.xp, this.yp, this.wp, this.hp);
+    }
+    crashWith(item) {
+        return (this.xp < item.x + item.w) &&
+        (this.xp + this.wp > item.x) &&
+        (this.yp < item.y + item.h) &&
+        (this.yp + this.hp > item.y);
     }
 
 // 1.2 Mujer
@@ -219,7 +229,18 @@ function drawEstadisticas() {
     tablero.draw()
 }
 // RevisarColision
-
+function checkCollition() {
+    arrayOfBadness.forEach((badness, ei) => {
+        if(player.crashWith(badness)) {
+            acountBank += badness.bank
+            polizaCoverage += badness.coverage
+            //level += badness.level
+            arrayOfBadness.splice(ei, 1);
+            console.log(acountBank + " " + polizaCoverage + " " + level)
+        }
+    }
+    )};
+    
 // Revisar si sube de Nivel
 function LevelUp (){
     if (frames % 66 == 0) {
@@ -279,7 +300,7 @@ function GameHart() {
     drawEstadisticas()
     player.draw();
     player.createKeyEvents
-    //checkCollition();
+    checkCollition();
     LevelUp();
     //gameOver();
     frames++;
