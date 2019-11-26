@@ -2,38 +2,45 @@
 // 1.0 Variables
 let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d')
-let interval;
-let hurryUp = 1;
-let frames = 0;
 canvas.width = 900;
 canvas.height = 500;
+let frames = 0;
+let interval;
 
 let acountBank = 150
 let polizaCoverage = 5000;
-
 let level = 1;
-let arrayBnkImgL1 = ['./img/bottle.png','./img/music.png']
-let arrayBnkImgL2 = ['./img/colegiatura.png','./img/medicina.png']
-let arrayBnkImgL3 = ['./img/medicina.png','./img/colegiatura.png']
-let arrayBnkImgL4 = ['./img/medicina.png']
 
-let arrayBnkCovImgL1 = ['./img/enfermedad.png']
-let arrayBnkCovImgL2 = ['./img/accidente.png','./img/sarten.png','./img/enfermedad.png']
-let arrayBnkCovImgL3 = ['./img/accidente.png','./img/sarten.png','./img/enfermedad.png']
-let arrayBnkCovImgL4 = ['./img/accidente.png','./img/enfermedad.png']
-
-let arrayBnkLvlImgL1 = ['./img/bebe.png']
-let arrayBnkLvlImgL2 = ['./img/anillo.png']
-let arrayBnkLvlImgL3 = ['./img/rodilla.png',]
-let arrayBnkLvlImgL4 = ['./img/muerte.png',]
+let hurryUp = 1;
+let bankValueUp = 1.5
+let bankValueDown = -3.5
+let coverageValueDown = -250
 
 let arrayOfBadness =[];
-
-
 // 1.1 Stage
 
 // 2.0 Constantes
+const backImage = document.getElementById('lifegame');
+const spriteImage = document.getElementById('player');
 
+const coinImage = document.getElementById('coin');
+
+const arrayBnkImgL1 = [document.getElementById('fiesta'),document.getElementById('avion')]
+const arrayBnkImgL2 = [document.getElementById('colegiatura'),document.getElementById('medicina')]
+const arrayBnkImgL3 = [document.getElementById('colegiatura'),document.getElementById('medicina')]
+const arrayBnkImgL4 = [document.getElementById('medicina')]
+
+//const arrayBnkCovImgL1 = ['./img/enfermedad.png']
+const arrayBnkCovImgL1 = [document.getElementById('enfermedad')]
+const arrayBnkCovImgL2 = [document.getElementById('accidente'),document.getElementById('sarten'),document.getElementById('enfermedad')]
+const arrayBnkCovImgL3 = [document.getElementById('accidente'),document.getElementById('sarten'),document.getElementById('enfermedad')]
+const arrayBnkCovImgL4 = [document.getElementById('accidente'),document.getElementById('enfermedad')]
+
+//const arrayBnkLvlImgL1 = ['./img/bebe.png']
+const arrayBnkLvlImgL1 = [document.getElementById('bebe')]
+const arrayBnkLvlImgL2 = [document.getElementById('anillo')]
+const arrayBnkLvlImgL3 = [document.getElementById('rodilla')]
+const arrayBnkLvlImgL4 = [document.getElementById('muerte')]
 
 // CLASES Y METODOS
 
@@ -48,10 +55,12 @@ class Hombre {
         this.hp = h;
         this.yearsOld = 25;
         this.speed = 45;
+        this.sprite = spriteImage;
     }
     draw() {
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(this.xp, this.yp, this.wp, this.hp);
+        //ctx.fillStyle = 'blue';
+        //ctx.fillRect(this.xp, this.yp, this.wp, this.hp);
+        ctx.drawImage(this.sprite, this.x, this.y, this.w, this.h)
     }
     crashWith(item) {
         return (this.xp < item.x + item.w) &&
@@ -77,11 +86,7 @@ class ObjectOfBadness {
         this.w = w;
         this.h = h; 
     }
-    draw() {
-        this.y += this.speed;
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.x, this.y, this.w, this.h);
-    }
+    
 }
 
 class Coin extends ObjectOfBadness {
@@ -92,6 +97,12 @@ class Coin extends ObjectOfBadness {
         this.bank = bnk;
         this.coverage = cvg;
         this.gameover = dead;
+    }
+    draw() {
+        this.y += this.speed;
+        //ctx.fillStyle = 'yellow';
+        //ctx.fillRect(this.x, this.y, this.w, this.h);
+        ctx.drawImage(this.image, this.x, this.y, this.w, this.h)
     }
 }
 
@@ -105,6 +116,12 @@ class Damage extends ObjectOfBadness {
         this.bank = bnk;
         this.coverage = cvg;
         this.gameover = dead;
+    }
+    draw() {
+        this.y += this.speed;
+        //ctx.fillStyle = 'red';
+        //ctx.fillRect(this.x, this.y, this.w, this.h);
+        ctx.drawImage(this.image, this.x, this.y, this.w, this.h)
     }
 }
 // 2.2 BANK- (LEVEL 1) ::: Musica :::
@@ -138,26 +155,6 @@ class Estadisitca {
     }
 }
 
-// KeyListener
-// class createKeyEvents {
-//     document.onkeydown = (event) => {
-//         switch(event.which) {
-//         case 37:
-//             this.xp+=this.speed;
-//             console.log('izq')
-//             break;
-//         case 39:
-//             this.xp-=this.speed;
-//             console.log('der')
-//             break;
-//         default:
-//             console.log('nothing')
-//             break;
-//         }
-//     }
-// } 
-
-
 // FUNCIONES COMPLEMENTARIAS
 
 // GenerarObjetos
@@ -166,47 +163,47 @@ function generateBadness() {
     switch (level){
         case 1:
             if(frames % 200 === 0) {
-                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,'./img/coin.png',hurryUp,1.5,0,0));
+                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60, coinImage,hurryUp,bankValueUp,0,0));
             }
-            if (frames % 150 === 0) {
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,30,60,arrayBnkImgL1[Math.floor(Math.random()*arrayBnkImgL1.length)],hurryUp,-3.5,0,0));
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,70,10,arrayBnkCovImgL1[Math.floor(Math.random()*arrayBnkCovImgL1.length)],hurryUp,-3.5,250,0));
+            if (frames % 50 === 0) {
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkImgL1[Math.floor(Math.random()*arrayBnkImgL1.length)],hurryUp, bankValueDown,0,0));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkCovImgL1[Math.floor(Math.random()*arrayBnkCovImgL1.length)],hurryUp,bankValueDown,coverageValueDown,0));
             }
             if (frames % 500 === 0) {
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,10,10,arrayBnkLvlImgL1[Math.floor(Math.random()*arrayBnkLvlImgL1.length)],hurryUp,-3.5,0,1));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkLvlImgL1[Math.floor(Math.random()*arrayBnkLvlImgL1.length)],hurryUp,bankValueDown,0,1));
             }
             break;
         case 2:
             if(frames % 200 === 0) {
-                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,'./img/coin.png',hurryUp,1.5,0,0));
+                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,coinImage,hurryUp,1.5,0,0));
             }
-            if (frames % 150 === 0) {
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,50,20,arrayBnkImgL2[Math.floor(Math.random()*arrayBnkImgL2.length)],hurryUp,-3.5,0,0));
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,40,10,arrayBnkCovImgL2[Math.floor(Math.random()*arrayBnkCovImgL2.length)],hurryUp,-3.5,250,0));
+            if (frames % 50 === 0) {
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkImgL2[Math.floor(Math.random()*arrayBnkImgL2.length)],hurryUp,bankValueDown,0,0));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkCovImgL2[Math.floor(Math.random()*arrayBnkCovImgL2.length)],hurryUp,bankValueDown,coverageValueDown,0));
             }
             if (frames % 500 === 0) {
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,15,5,arrayBnkLvlImgL2[Math.floor(Math.random()*arrayBnkLvlImgL2.length)],hurryUp,-3.5,250,1));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkLvlImgL2[Math.floor(Math.random()*arrayBnkLvlImgL2.length)],hurryUp,bankValueDown,coverageValueDown,1));
             }
             break;
         case 3:
             if(frames % 200 === 0) {
-                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,'./img/coin.png',hurryUp,1.5,0,0));
+                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60,coinImage,hurryUp,1.5,0,0));
             }
-            if (frames % 150 === 0) {
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,70,10,arrayBnkImgL3[Math.floor(Math.random()*arrayBnkImgL3.length)],hurryUp,-3.5,0,0));
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,90,80,arrayBnkCovImgL3[Math.floor(Math.random()*arrayBnkCovImgL3.length)],hurryUp,-3.5,250,0));
+            if (frames % 50 === 0) {
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkImgL3[Math.floor(Math.random()*arrayBnkImgL3.length)],hurryUp,bankValueDown,0,0));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkCovImgL3[Math.floor(Math.random()*arrayBnkCovImgL3.length)],hurryUp,bankValueDown,coverageValueDown,0));
             }
             if (frames % 500 === 0) {     
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,10,10,arrayBnkLvlImgL3[Math.floor(Math.random()*arrayBnkLvlImgL3.length)],hurryUp,-3.5,250,1));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkLvlImgL3[Math.floor(Math.random()*arrayBnkLvlImgL3.length)],hurryUp,bankValueDown,coverageValueDown,1));
             }
             break;
         case 4:
-                if (frames % 150 === 0) {
-                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,200,30,arrayBnkImgL4[Math.floor(Math.random()*arrayBnkImgL3.length)],hurryUp,-3.5,0,0));
-                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,250,50,arrayBnkCovImgL4[Math.floor(Math.random()*arrayBnkCovImgL3.length)],hurryUp,-3.5,250,0));
+                if (frames % 50 === 0) {
+                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkImgL4[Math.floor(Math.random()*arrayBnkImgL4.length)],hurryUp,bankValueDown,0,0));
+                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkCovImgL4[Math.floor(Math.random()*arrayBnkCovImgL4.length)],hurryUp,bankValueDown,coverageValueDown,0));
                 }
-                if (frames % 500 === 0) { 
-                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,50,50,arrayBnkLvlImgL4[Math.floor(Math.random()*arrayBnkLvlImgL3.length)],hurryUp,-3.5,250,1));
+                if (frames % 100 === 0) { 
+                    arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkLvlImgL4[Math.floor(Math.random()*arrayBnkLvlImgL4.length)],hurryUp,bankValueDown,coverageValueDown,1));
                 }
                 break;
         default:
@@ -217,18 +214,24 @@ function generateBadness() {
 
 }
 
-// DibujarObjetos
+// Dibujar Objetos
+function drawBackround() {
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    ctx.drawImage(arrayBnkLvlImgL4[0],0,150,this.width, this.height) //revisar porque no muestra el fondo
+}
+
 function drawBadness() {
     arrayOfBadness.forEach((badness, ei) => {
         badness.draw();
     });
 }
 
+// Dibujar Estadisticas
 function drawEstadisticas() {
     let tablero = new Estadisitca(0,0,canvas.width,70)
     tablero.draw()
 }
-// RevisarColision
+// Revisar Colision
 function checkCollition() {
     arrayOfBadness.forEach((badness, ei) => {
         if(player.crashWith(badness)) {
@@ -268,13 +271,15 @@ function LevelUp (){
             hurryUp = 2
             level +=1
             arrayOfBadness=[]
+            player.speed -= 10
             break;
         case 79:
             //this.speed = 85
             alert('Nivel 4')
-            hurryUp = 2
+            hurryUp = 3
             level +=1
             arrayOfBadness=[]
+            player.speed -= 25
             break;
         case 97:
             //this.speed = 98
@@ -291,10 +296,18 @@ function LevelUp (){
 // FUNCIONES PRINCIPALES
 
 // GameOver
+function gameOver() {
+    if(acountBank <= 0) {
+        clearInterval(interval);
+        alert("No money no honey !!!")
+    } else if (polizaCoverage <= 0) {
+        bankValueDown -= 100
+    }
+}
 
 // ==::: MAIN  :::==
 function GameHart() {
-    ctx.clearRect(0,0,canvas.width, canvas.height);
+    drawBackround();
     generateBadness();
     drawBadness();
     drawEstadisticas()
@@ -302,17 +315,13 @@ function GameHart() {
     player.createKeyEvents
     checkCollition();
     LevelUp();
-    //gameOver();
+    gameOver();
     frames++;
     
 }
 
-
 // INSTANCIAS
 // crearJugador
-
-
-
 
 // Start Game
     //this.createKeyEvents()
