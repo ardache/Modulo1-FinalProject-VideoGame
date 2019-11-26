@@ -5,6 +5,7 @@ let ctx = canvas.getContext('2d')
 canvas.width = 900;
 canvas.height = 500;
 let frames = 0;
+playerCurrentFrame = 0;
 let interval;
 
 let acountBank = 150
@@ -60,7 +61,12 @@ class Hombre {
     draw() {
         //ctx.fillStyle = 'blue';
         //ctx.fillRect(this.xp, this.yp, this.wp, this.hp);
-        ctx.drawImage(this.sprite, this.x, this.y, this.w, this.h)
+        // if(frames % 9 === 0) {
+            ctx.drawImage(this.sprite, this.xp, this.yp, this.wp, this.hp)
+        //     ctx.drawImage(this.sprite, playerCurrentFrame * 670/7, 0, 670/7, 130, this.xp, this.yp, this.wp, this.hp) //revisar porque no muestra el fondo
+        //     //console.log ('ahora ')
+        // }
+        //ctx.drawImage(this.img, charizardCurrentFrame * 940/4, 0, 940/4, 94, this.x, this.y, this.w, this.h)
     }
     crashWith(item) {
         return (this.xp < item.x + item.w) &&
@@ -239,7 +245,7 @@ function checkCollition() {
             polizaCoverage += badness.coverage
             //level += badness.level
             arrayOfBadness.splice(ei, 1);
-            console.log(acountBank + " " + polizaCoverage + " " + level)
+            console.log(acountBank + " - " + polizaCoverage + " - " + level)
         }
     }
     )};
@@ -311,6 +317,7 @@ function GameHart() {
     generateBadness();
     drawBadness();
     drawEstadisticas()
+    playerCurrentFrame = ++playerCurrentFrame % 4;
     player.draw();
     player.createKeyEvents
     checkCollition();
@@ -325,7 +332,7 @@ function GameHart() {
 
 // Start Game
     //this.createKeyEvents()
-    let player = new Hombre(375,360,50,100);
+    let player = new Hombre(375,360,95,100);
     interval = setInterval(GameHart, 1000/60);
 
 
