@@ -159,10 +159,20 @@ class Estadisitca {
     }
     draw() {
         ctx.fillStyle = 'green';
-        ctx.fillRect(this.x, this.y, this.w, this.h);
+        //ctx.fillRect(this.x, this.y, this.w, this.h);
+
+     ctx.beginPath();
+     ctx.moveTo(0, 20);
+     ctx.lineTo(150, 0);
+     ctx.lineTo(150, 80);
+     ctx.lineTo(0, 100);
+    
+     ctx.fill();
+
+
         ctx.fillStyle = 'white';
         ctx.font = "27px Arial";
-        ctx.fillText("Edad: " + player.yearsOld, 10, 50);
+        ctx.fillText("Edad: " + player.yearsOld, 10, 60);
         ctx.fillText("Banco: $" + acountBank + " K", 300, 50);
         ctx.fillText("Cobertura: $" + polizaCoverage + " K", 600, 50);
     }
