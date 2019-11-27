@@ -163,6 +163,8 @@ class Estadisitca {
         ctx.fillStyle = 'white';
         ctx.font = "27px Arial";
         ctx.fillText("Edad: " + player.yearsOld, 10, 50);
+        ctx.fillText("Banco: $" + acountBank + " K", 300, 50);
+        ctx.fillText("Cobertura: $" + polizaCoverage + " K", 600, 50);
     }
 }
 
@@ -295,7 +297,7 @@ function LevelUp (){
             break;
         case 97:
             //this.speed = 98
-            alert('Game Over & Estadisticas')
+            alert('Ganaste. Tu muerte sera de forma natural. & Estadisticas')
             clearInterval(interval)
             break;
         default:
@@ -310,8 +312,9 @@ function LevelUp (){
 // GameOver
 function gameOver() {
     if(acountBank <= 0) {
+        drawEstadisticas()
         clearInterval(interval);
-        alert("No money no honey !!!")
+        alert("Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld)
     } else if (polizaCoverage <= 0) {
         bankValueDown -= 100
     }
