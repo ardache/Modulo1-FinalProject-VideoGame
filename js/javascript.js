@@ -160,6 +160,9 @@ class Estadisitca {
     draw() {
         ctx.fillStyle = 'green';
         ctx.fillRect(this.x, this.y, this.w, this.h);
+        ctx.fillStyle = 'white';
+        ctx.font = "27px Arial";
+        ctx.fillText("Edad: " + player.yearsOld, 10, 50);
     }
 }
 
@@ -171,14 +174,14 @@ function generateBadness() {
     switch (level){
         case 1:
             if(frames % 200 === 0) {
-                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),0,60,60, coinImage,hurryUp,bankValueUp,0,0));
+                arrayOfBadness.push(new Coin(Math.floor(Math.random()*canvas.width),-60,60,60, coinImage,hurryUp,bankValueUp,0,0));
             }
             if (frames % 50 === 0) {
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkImgL1[Math.floor(Math.random()*arrayBnkImgL1.length)],hurryUp, bankValueDown,0,0));
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkCovImgL1[Math.floor(Math.random()*arrayBnkCovImgL1.length)],hurryUp,bankValueDown,coverageValueDown,0));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),-60,60,60,arrayBnkImgL1[Math.floor(Math.random()*arrayBnkImgL1.length)],hurryUp, bankValueDown,0,0));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),-60,60,60,arrayBnkCovImgL1[Math.floor(Math.random()*arrayBnkCovImgL1.length)],hurryUp,bankValueDown,coverageValueDown,0));
             }
             if (frames % 500 === 0) {
-                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),0,60,60,arrayBnkLvlImgL1[Math.floor(Math.random()*arrayBnkLvlImgL1.length)],hurryUp,bankValueDown,0,1));
+                arrayOfBadness.push(new Damage(Math.floor(Math.random()*canvas.width),-60,60,60,arrayBnkLvlImgL1[Math.floor(Math.random()*arrayBnkLvlImgL1.length)],hurryUp,bankValueDown,0,1));
             }
             break;
         case 2:
