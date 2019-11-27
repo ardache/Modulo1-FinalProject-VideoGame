@@ -61,11 +61,13 @@ class Hombre {
     draw() {
         //ctx.fillStyle = 'blue';
         //ctx.fillRect(this.xp, this.yp, this.wp, this.hp);
-        // if(frames % 9 === 0) {
-            ctx.drawImage(this.sprite, this.xp, this.yp, this.wp, this.hp)
+        if(frames % 6 === 0) {
+            playerCurrentFrame = ++playerCurrentFrame % 4;
+            console.log(playerCurrentFrame)
         //     ctx.drawImage(this.sprite, playerCurrentFrame * 670/7, 0, 670/7, 130, this.xp, this.yp, this.wp, this.hp) //revisar porque no muestra el fondo
         //     //console.log ('ahora ')
-        // }
+        }
+        ctx.drawImage(this.sprite, playerCurrentFrame * 670/7, 0, 670/7, 130, this.xp, this.yp, this.wp, this.hp)
         //ctx.drawImage(this.img, charizardCurrentFrame * 940/4, 0, 940/4, 94, this.x, this.y, this.w, this.h)
     }
     crashWith(item) {
@@ -223,7 +225,8 @@ function generateBadness() {
 // Dibujar Objetos
 function drawBackround() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.drawImage(arrayBnkLvlImgL4[0],0,150,this.width, this.height) //revisar porque no muestra el fondo
+    ctx.drawImage(backImage,0,0,canvas.width, canvas.height) //revisar porque no muestra el fondo
+    
 }
 
 function drawBadness() {
@@ -317,7 +320,6 @@ function GameHart() {
     generateBadness();
     drawBadness();
     drawEstadisticas()
-    playerCurrentFrame = ++playerCurrentFrame % 4;
     player.draw();
     player.createKeyEvents
     checkCollition();
