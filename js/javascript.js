@@ -11,6 +11,7 @@ let interval;
 let acountBank = 150
 let polizaCoverage = 5000;
 let level = 1;
+let fxBlur = 20
 
 let hurryUp = 1;
 let bankValueUp = 1.5
@@ -63,7 +64,7 @@ class Hombre {
         //ctx.fillRect(this.xp, this.yp, this.wp, this.hp);
         if(frames % 6 === 0) {
             playerCurrentFrame = ++playerCurrentFrame % 4;
-            console.log(playerCurrentFrame)
+            //console.log(playerCurrentFrame)
         //     ctx.drawImage(this.sprite, playerCurrentFrame * 670/7, 0, 670/7, 130, this.xp, this.yp, this.wp, this.hp) //revisar porque no muestra el fondo
         //     //console.log ('ahora ')
         }
@@ -158,23 +159,95 @@ class Estadisitca {
         this.h = h;
     }
     draw() {
-        ctx.fillStyle = 'green';
-        //ctx.fillRect(this.x, this.y, this.w, this.h);
+        //SCORE 1
+        //Dibuja Rectangulo Naranja de Cobertura
+        ctx.beginPath();
+        ctx.fillStyle = 'orange';
+        ctx.globalAlpha = 0.1;
+        //ctx.fillRect(0, 0, canvas.width, 50);
+        for (let i = 0; i < fxBlur; i++) {
+            ctx.beginPath();
+            ctx.arc(canvas.width/2, 10, 15 + 5 * i, 0, Math.PI * 2, true);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        // //Dibuja Rectangulo Blanco de Cobertura
+        // ctx.beginPath();
+        // ctx.fillStyle = 'white';
+        // ctx.moveTo(canvas.width, 0);
+        // ctx.lineTo(canvas.width-160, 0);
+        // ctx.lineTo(canvas.width-170, 40);
+        // ctx.lineTo(canvas.width, 90);
+        // ctx.fill();
 
-     ctx.beginPath();
-     ctx.moveTo(0, 20);
-     ctx.lineTo(150, 0);
-     ctx.lineTo(150, 80);
-     ctx.lineTo(0, 100);
-    
-     ctx.fill();
-
-
+        //Dibuja Texto de Cobertura
         ctx.fillStyle = 'white';
-        ctx.font = "27px Arial";
-        ctx.fillText("Edad: " + player.yearsOld, 10, 60);
-        ctx.fillText("Banco: $" + acountBank + " K", 300, 50);
-        ctx.fillText("Cobertura: $" + polizaCoverage + " K", 600, 50);
+        ctx.font = "35px Verdana";
+        ctx.fillText("$"+polizaCoverage+" K", (canvas.width/2)-80, 35);
+        //ctx.rotate(15 * Math.PI / 180)
+        ctx.font = "35px Verdana";
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.strokeText("Cobertura",(canvas.width/2)-93,75)
+        //ctx.setTransform(1, 0, 0, 1, 0, 0);
+        //ctx.fillText("Banco: $" + acountBank + " K", 300, 50);
+        //ctx.fillText("Cobertura: $" + polizaCoverage + " K", 200, 50);
+
+        //SCORE 2
+        //Dibuja Rectangulo Naranja de Edad
+        ctx.beginPath();
+        ctx.fillStyle = 'orange';
+        ctx.moveTo(0, 0);
+        ctx.lineTo(150, 0);
+        ctx.lineTo(180, 80);
+        ctx.lineTo(0, 100);
+        ctx.fill();
+        //Dibuja Rectangulo Blanco de Edad
+        ctx.beginPath();
+        ctx.fillStyle = 'white';
+        ctx.moveTo(0, 0);
+        ctx.lineTo(100, 0);
+        ctx.lineTo(150, 20);
+        ctx.lineTo(20, 90);
+        ctx.fill();
+        //Dibuja Texto de Edad
+        ctx.fillStyle = 'black';
+        ctx.font = "40px Verdana";
+        ctx.fillText(player.yearsOld, 40, 45);
+        ctx.rotate(-30 * Math.PI / 180)
+        ctx.font = "35px Verdana";
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.strokeText("Edad",33,118)
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        //SCORE 3
+        //Dibuja Rectangulo Naranja de Banco
+        ctx.beginPath();
+        ctx.fillStyle = 'orange';
+        ctx.moveTo(canvas.width, 0);
+        ctx.lineTo(canvas.width-200, 0);
+        ctx.lineTo(canvas.width-240, 80);
+        ctx.lineTo(canvas.width, 100);
+        ctx.fill();
+        //Dibuja Rectangulo Blanco de Banco
+        ctx.beginPath();
+        ctx.fillStyle = 'white';
+        ctx.moveTo(canvas.width, 0);
+        ctx.lineTo(canvas.width-160, 0);
+        ctx.lineTo(canvas.width-170, 40);
+        ctx.lineTo(canvas.width, 90);
+        ctx.fill();
+        //Dibuja Texto de Banco
+        ctx.fillStyle = 'black';
+        ctx.font = "35px Verdana";
+        ctx.fillText("$"+acountBank+" K", canvas.width-160, 35);
+        ctx.rotate(15 * Math.PI / 180)
+        ctx.font = "35px Verdana";
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.strokeText("Banco",canvas.width-213,-125)
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
 }
 
@@ -260,7 +333,11 @@ function checkCollition() {
     arrayOfBadness.forEach((badness, ei) => {
         if(player.crashWith(badness)) {
             acountBank += badness.bank
-            polizaCoverage += badness.coverage
+            console.log ("menos " + badness.bank)
+            if (badness.coverage < 0) {
+                polizaCoverage += badness.coverage
+                fxBlur += 3;
+            }
             //level += badness.level
             arrayOfBadness.splice(ei, 1);
             console.log(acountBank + " - " + polizaCoverage + " - " + level)
@@ -272,7 +349,7 @@ function checkCollition() {
 function LevelUp (){
     if (frames % 66 == 0) {
         player.yearsOld += 1
-        console.log(player.yearsOld)
+        //console.log(player.yearsOld)
     a = player.yearsOld
     switch (a){
         case 36: case 38: case 40: case 42:
@@ -280,7 +357,7 @@ function LevelUp (){
         case 72: case 74: case 76: case 78:
         case 90: case 92: case 94: case 96: 
            hurryUp += 1
-           console.log("hurryup++ : " + hurryUp)
+           //console.log("hurryup++ : " + hurryUp)
            break;
         case 43:
             //this.speed = 35
@@ -325,10 +402,12 @@ function gameOver() {
         drawEstadisticas()
         clearInterval(interval);
         alert("Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld)
-    } else if (polizaCoverage <= 0) {
+    }  
+    if (polizaCoverage < 0) {
         bankValueDown -= 100
     }
-}
+}   
+
 
 // ==::: MAIN  :::==
 function GameHart() {
@@ -359,10 +438,16 @@ function GameHart() {
 document.addEventListener('keydown', function(e) {
     switch(e.keyCode){
         case 37:
-            player.xp-=player.speed;
+            //15
+            if (player.xp >15) {
+                player.xp-=player.speed;
+            }
             break;
         case 39:
-            player.xp+=player.speed;
+            //780
+            if (player.xp < 780) {
+                player.xp+=player.speed;
+            }
             break;
         default:
             break;
