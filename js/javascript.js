@@ -1,9 +1,12 @@
 // CONFIGURACION
 // 1.0 Variables
+let backImage = document.getElementById('bgLevel1');
 let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d')
 canvas.width = 900;
 canvas.height = 500;
+
+
 let frames = 0;
 playerCurrentFrame = 0;
 let interval;
@@ -23,7 +26,7 @@ let arrayOfBadness =[];
 // 1.1 Stage
 
 // 2.0 Constantes
-const backImage = document.getElementById('lifegame');
+
 const spriteImage = document.getElementById('player');
 
 const coinImage = document.getElementById('coin');
@@ -360,10 +363,12 @@ function LevelUp (){
         }
     }
     if ((frames == 1100) || (frames == 2100) || (frames == 3100)) {
-        alert('Next Level')
+        //alert('Next Level')
         hurryUp = 1
         level += 1
-        arrayOfBadness=[]
+        player.speed -= 10
+        arrayOfBadness=[] 
+        backImage = document.getElementById('bgLevel'+level);
     }
     if (frames >= 4100 && frames<5000) {
         alert('Ganaste. Tu muerte sera de forma natural. & Estadisticas')
