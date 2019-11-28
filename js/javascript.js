@@ -323,19 +323,18 @@ function checkCollition() {
                 fxBlur += 3;
             }
             if (badness.level == 1){
-                level += 1
                 console.log("nivel=" + level)
                 switch (level){
-                    case 2:
+                    case 1:
                         frames = 1099;
                         break;
-                    case 3:
+                    case 2:
                         frames = 2099;
                         break;
-                    case 4:
+                    case 3:
                         frames = 3099;
                         break;
-                    case 5:
+                    case 4:
                         frames = 5000;
                         break;
                     default:
@@ -363,6 +362,7 @@ function LevelUp (){
     if ((frames == 1100) || (frames == 2100) || (frames == 3100)) {
         alert('Next Level')
         hurryUp = 1
+        level += 1
         arrayOfBadness=[]
     }
     if (frames >= 4100 && frames<5000) {
@@ -376,6 +376,11 @@ function LevelUp (){
 }
 
 // FUNCIONES PRINCIPALES
+function startGame(){
+    player = new Hombre(375,360,95,100);
+    interval = setInterval(GameHart, 1000/60);
+}
+
 // GameOver
 function gameOver() {
     if(acountBank <= 0) {
@@ -389,6 +394,7 @@ function gameOver() {
 }   
 
 // ==::: MAIN  :::==
+
 function GameHart() {
     drawBackround();
     generateBadness();
@@ -407,8 +413,6 @@ function GameHart() {
 // crearJugador
 // Start Game
     //this.createKeyEvents()
-    let player = new Hombre(375,360,95,100);
-    interval = setInterval(GameHart, 1000/60);
 
 // EVENTOS 
 // 1.0 KeyListener
@@ -430,4 +434,10 @@ document.addEventListener('keydown', function(e) {
             break;
     }
 })
+
+window.onload = function() {
+    document.getElementById("start-button").onclick = function() {
+        startGame();
+    };
+}  
 
