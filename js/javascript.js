@@ -40,8 +40,8 @@ const arrayBnkCovImgL3 = [document.getElementById('accidente'),document.getEleme
 const arrayBnkCovImgL4 = [document.getElementById('accidente'),document.getElementById('enfermedad')]
 
 //const arrayBnkLvlImgL1 = ['./img/bebe.png']
-const arrayBnkLvlImgL1 = [document.getElementById('bebe')]
-const arrayBnkLvlImgL2 = [document.getElementById('anillo')]
+const arrayBnkLvlImgL1 = [document.getElementById('anillo')]
+const arrayBnkLvlImgL2 = [document.getElementById('bebe')]
 const arrayBnkLvlImgL3 = [document.getElementById('rodilla')]
 const arrayBnkLvlImgL4 = [document.getElementById('muerte')]
 
@@ -100,13 +100,12 @@ class ObjectOfBadness {
 }
 
 class Coin extends ObjectOfBadness {
-    constructor (x,y,w,h, img, spd, bnk, cvg, dead) {
+    constructor (x,y,w,h, img, spd, bnk, cvg) {
         super(x,y,w,h)
         this.image = img //'./img/coin.png'
         this.speed = spd;
         this.bank = bnk;
         this.coverage = cvg;
-        this.gameover = dead;
     }
     draw() {
         this.y += this.speed;
@@ -119,13 +118,13 @@ class Coin extends ObjectOfBadness {
 // BANK -
 // 2.1 BANK- (LEVEL 1) ::: Botella :::
 class Damage extends ObjectOfBadness {
-    constructor (x,y,w,h, img, spd, bnk, cvg, dead) {
+    constructor (x,y,w,h, img, spd, bnk, cvg, lvl) {
         super(x,y,w,h)
         this.image = img //'./img/bottle.png'
         this.speed = spd;
         this.bank = bnk;
         this.coverage = cvg;
-        this.gameover = dead;
+        this.level = lvl;
     }
     draw() {
         this.y += this.speed;
@@ -243,7 +242,6 @@ class Estadisitca {
 // FUNCIONES COMPLEMENTARIAS
 // GenerarObjetos
 function generateBadness() {
-
     switch (level){
         case 1:
             if(frames % 200 === 0) {
@@ -317,12 +315,33 @@ function checkCollition() {
     arrayOfBadness.forEach((badness, ei) => {
         if(player.crashWith(badness)) {
             acountBank += badness.bank + noCoverageFine
-            console.log ("menos " + badness.bank + " mas " + noCoverageFine)
+            //console.log ("menos " + badness.bank + " mas " + noCoverageFine)
+            console.log(badness.level)
+
             if (badness.coverage < 0) {
                 polizaCoverage += badness.coverage
                 fxBlur += 3;
             }
-            //level += badness.level
+            if (badness.level == 1){
+                level += 1
+                console.log("nivel=" + level)
+                switch (level){
+                    case 2:
+                        frames = 1099;
+                        break;
+                    case 3:
+                        frames = 2099;
+                        break;
+                    case 4:
+                        frames = 3099;
+                        break;
+                    case 5:
+                        frames = 5000;
+                        break;
+                    default:
+                        break;
+                }
+            }
             arrayOfBadness.splice(ei, 1);
             console.log(acountBank + " - " + polizaCoverage + " - " + level)
         }
@@ -334,49 +353,27 @@ function LevelUp (){
     if (frames % 66 == 0) {
         player.yearsOld += 1
         //console.log(player.yearsOld)
-        a = player.yearsOld
-    switch (a){
-        case 36: case 38: case 40: case 42:
-        case 54: case 56: case 58: case 60:
-        case 72: case 74: case 76: case 78:
-        case 90: case 92: case 94: case 96: 
-           hurryUp += 1
-           //console.log("hurryup++ : " + hurryUp)
-           break;
-        case 43:
-            //this.speed = 35
-            alert('Nivel 2')
+        if ((frames > 600 && frames < 1100) || (frames > 1700 && frames < 2100) || (frames > 2700 && frames < 3100) || (frames > 3700 && frames < 4100)) {
+            hurryUp += 1
+            //alert("va mas rapido...!!!")
+        } else {
             hurryUp = 1
-            level +=1
-            arrayOfBadness=[]
-            break;
-        case 61:
-            //this.speed = 45
-            alert('Nivel 3')
-            hurryUp = 2
-            level +=1
-            arrayOfBadness=[]
-            player.speed -= 10
-            break;
-        case 79:
-            //this.speed = 85
-            alert('Nivel 4')
-            hurryUp = 3
-            level +=1
-            arrayOfBadness=[]
-            player.speed -= 25
-            break;
-        case 97:
-            //this.speed = 98
-            alert('Ganaste. Tu muerte sera de forma natural. & Estadisticas')
-            clearInterval(interval)
-            break;
-        default:
-            break;
         }
     }
+    if ((frames == 1100) || (frames == 2100) || (frames == 3100)) {
+        alert('Next Level')
+        hurryUp = 1
+        arrayOfBadness=[]
+    }
+    if (frames >= 4100 && frames<5000) {
+        alert('Ganaste. Tu muerte sera de forma natural. & Estadisticas')
+        clearInterval(interval)
+    }
+    if (frames >= 5000 ){
+        alert("Ya perdiste !!!  Te encontraste con la muerte a los " + player.yearsOld + " años.")
+        clearInterval(interval)
+    }
 }
-
 
 // FUNCIONES PRINCIPALES
 // GameOver
@@ -403,7 +400,7 @@ function GameHart() {
     gameOver();
     LevelUp();
     frames++;
-    
+    console.log(frames)
 }
 
 // INSTANCIAS
