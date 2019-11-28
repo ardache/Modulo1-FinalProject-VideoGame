@@ -9,13 +9,14 @@ playerCurrentFrame = 0;
 let interval;
 
 let acountBank = 150
-let polizaCoverage = 5000;
+let polizaCoverage = 3000;
 let level = 1;
 let fxBlur = 20
 
 let hurryUp = 1;
 let bankValueUp = 1.5
 let bankValueDown = -3.5
+let noCoverageFine = 0
 let coverageValueDown = -250
 
 let arrayOfBadness =[];
@@ -171,28 +172,16 @@ class Estadisitca {
             ctx.fill();
         }
         ctx.globalAlpha = 1;
-        // //Dibuja Rectangulo Blanco de Cobertura
-        // ctx.beginPath();
-        // ctx.fillStyle = 'white';
-        // ctx.moveTo(canvas.width, 0);
-        // ctx.lineTo(canvas.width-160, 0);
-        // ctx.lineTo(canvas.width-170, 40);
-        // ctx.lineTo(canvas.width, 90);
-        // ctx.fill();
-
+       
         //Dibuja Texto de Cobertura
         ctx.fillStyle = 'white';
         ctx.font = "35px Verdana";
         ctx.fillText("$"+polizaCoverage+" K", (canvas.width/2)-80, 35);
-        //ctx.rotate(15 * Math.PI / 180)
         ctx.font = "35px Verdana";
         ctx.strokeStyle = 'white';
         ctx.lineWidth = 2;
         ctx.strokeText("Cobertura",(canvas.width/2)-93,75)
-        //ctx.setTransform(1, 0, 0, 1, 0, 0);
-        //ctx.fillText("Banco: $" + acountBank + " K", 300, 50);
-        //ctx.fillText("Cobertura: $" + polizaCoverage + " K", 200, 50);
-
+       
         //SCORE 2
         //Dibuja Rectangulo Naranja de Edad
         ctx.beginPath();
@@ -252,7 +241,6 @@ class Estadisitca {
 }
 
 // FUNCIONES COMPLEMENTARIAS
-
 // GenerarObjetos
 function generateBadness() {
 
@@ -304,17 +292,13 @@ function generateBadness() {
                 break;
         default:
             break;
-
     }
-    //console.log(arrayOfBadness.length)
-
 }
 
 // Dibujar Objetos
 function drawBackround() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.drawImage(backImage,0,0,canvas.width, canvas.height) //revisar porque no muestra el fondo
-    
+    ctx.drawImage(backImage,0,0,canvas.width, canvas.height) 
 }
 
 function drawBadness() {
@@ -332,8 +316,8 @@ function drawEstadisticas() {
 function checkCollition() {
     arrayOfBadness.forEach((badness, ei) => {
         if(player.crashWith(badness)) {
-            acountBank += badness.bank
-            console.log ("menos " + badness.bank)
+            acountBank += badness.bank + noCoverageFine
+            console.log ("menos " + badness.bank + " mas " + noCoverageFine)
             if (badness.coverage < 0) {
                 polizaCoverage += badness.coverage
                 fxBlur += 3;
@@ -350,7 +334,7 @@ function LevelUp (){
     if (frames % 66 == 0) {
         player.yearsOld += 1
         //console.log(player.yearsOld)
-    a = player.yearsOld
+        a = player.yearsOld
     switch (a){
         case 36: case 38: case 40: case 42:
         case 54: case 56: case 58: case 60:
@@ -395,19 +379,17 @@ function LevelUp (){
 
 
 // FUNCIONES PRINCIPALES
-
 // GameOver
 function gameOver() {
     if(acountBank <= 0) {
-        drawEstadisticas()
+        //drawEstadisticas()
         clearInterval(interval);
         alert("Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld)
     }  
     if (polizaCoverage < 0) {
-        bankValueDown -= 100
+        noCoverageFine = -10
     }
 }   
-
 
 // ==::: MAIN  :::==
 function GameHart() {
@@ -418,20 +400,18 @@ function GameHart() {
     player.draw();
     player.createKeyEvents
     checkCollition();
-    LevelUp();
     gameOver();
+    LevelUp();
     frames++;
     
 }
 
 // INSTANCIAS
 // crearJugador
-
 // Start Game
     //this.createKeyEvents()
     let player = new Hombre(375,360,95,100);
     interval = setInterval(GameHart, 1000/60);
-
 
 // EVENTOS 
 // 1.0 KeyListener
