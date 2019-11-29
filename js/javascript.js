@@ -387,6 +387,7 @@ function LevelUp (){
         avisos = "Nivel "+ level
     }
     if (frames >= 4100 && frames<5000) {
+        audio.pause()
         clearInterval(interval)
         alert('!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOldyearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.')
         //avisos = '!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOldyearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.'
@@ -394,6 +395,7 @@ function LevelUp (){
         
     }
     if (frames >= 5000 ){
+        audio.pause()
         clearInterval(interval)
         alert("Ya perdiste !!!  Te encontraras con la muerte a los " + player.yearsOld + " años de forma inesperada. Contrata un seguro de vida ahora y que no te agarre por sorpresa")
         //avisos = "Ya perdiste !!!  Te encontraras con la muerte a los " + player.yearsOld + " años de forma inesperada. Contrata un seguro de vida ahora y que no te agarre por sorpresa"
@@ -413,6 +415,7 @@ function startGame(){
 function gameOver() {
     if(acountBank <= 0) {
         //drawEstadisticas()
+        audio.pause()
         clearInterval(interval);
         alert("Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld + ' años por falta de dinero. Asegurate con una cobertura mayor y extiende tu vida varios años más')
         //avisos = "Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld + ' años por falta de dinero. Asegurate con una cobertura mayor y extiende tu vida varios años más'
