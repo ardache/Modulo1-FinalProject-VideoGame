@@ -12,7 +12,7 @@ playerCurrentFrame = 0;
 let interval;
 
 let acountBank = 150
-let polizaCoverage = 3000;
+let polizaCoverage = 4000;
 let level = 1;
 let fxBlur = 20
 
@@ -27,9 +27,11 @@ let arrayOfBadness =[];
 
 // 2.0 Constantes
 
-const spriteImage = document.getElementById('player');
+
 
 const coinImage = document.getElementById('coin');
+
+let spriteImage = document.getElementById('player');
 
 const arrayBnkImgL1 = [document.getElementById('fiesta'),document.getElementById('avion')]
 const arrayBnkImgL2 = [document.getElementById('colegiatura'),document.getElementById('medicina')]
@@ -345,7 +347,7 @@ function checkCollition() {
                 }
             }
             arrayOfBadness.splice(ei, 1);
-            console.log(acountBank + " - " + polizaCoverage + " - " + level)
+            // console.log(acountBank + " / " + polizaCoverage + " / " + level)  ::::
         }
     }
     )};
@@ -371,12 +373,13 @@ function LevelUp (){
         backImage = document.getElementById('bgLevel'+level);
     }
     if (frames >= 4100 && frames<5000) {
-        alert('Ganaste. Tu muerte sera de forma natural. & Estadisticas')
         clearInterval(interval)
+        alert('!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOldyearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.')
+        
     }
     if (frames >= 5000 ){
-        alert("Ya perdiste !!!  Te encontraste con la muerte a los " + player.yearsOld + " años.")
         clearInterval(interval)
+        alert("Ya perdiste !!!  Te encontraras con la muerte a los " + player.yearsOld + " años de forma inesperada. Contrata un seguro de vida ahora y que no te agarre por sorpresa")
     }
 }
 
@@ -391,7 +394,7 @@ function gameOver() {
     if(acountBank <= 0) {
         //drawEstadisticas()
         clearInterval(interval);
-        alert("Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld)
+        alert("Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld + ' años por falta de dinero. Asegurate con una cobertura mayor y extiende tu vida varios años más')
     }  
     if (polizaCoverage < 0) {
         noCoverageFine = -10
@@ -427,12 +430,15 @@ document.addEventListener('keydown', function(e) {
             //15
             if (player.xp >15) {
                 player.xp-=player.speed;
+                player.sprite = document.getElementById('playerIzq');
             }
             break;
         case 39:
             //780
             if (player.xp < 780) {
                 player.xp+=player.speed;
+                player.sprite  = document.getElementById('player');
+
             }
             break;
         default:
