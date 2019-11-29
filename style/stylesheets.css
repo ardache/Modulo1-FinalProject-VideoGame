@@ -9,7 +9,7 @@ body {
     margin: 0;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 65%;
     transform: translate(-50%, -50%);
     border: 1px solid white;
 }
@@ -67,3 +67,11 @@ h2 {
   .endPage {
     text-align: center;
   }
+
+  .tg  {border-collapse:collapse;border-spacing:0; text-align: center; }
+  .tg td{font-family:Arial, sans-serif;font-size:10px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal}
+  .tg th{font-family:Arial, sans-serif;font-size:10px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+  .tg .tg-wp8o{text-align:center;border-style:none;vertical-align:top}
+  .tg .tg-mcqj{font-weight:bold; border-style:none;text-align:left;vertical-align:center}
+
+  
