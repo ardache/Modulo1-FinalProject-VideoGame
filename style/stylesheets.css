@@ -15,11 +15,14 @@ body {
 }
 h1 {
     text-align: center;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 35px
     
 }
 
 h2 {
     color: rgb(5, 201, 5);
+
 }
 
 .container {
@@ -65,7 +68,7 @@ h2 {
   }
 
   .endPage {
-    text-align: center;
+    text-align: center; padding-left: 40%;
   }
 
   .tg  {border-collapse:collapse;border-spacing:0; text-align: center; }
@@ -73,5 +76,7 @@ h2 {
   .tg th{font-family:Arial, sans-serif;font-size:10px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
   .tg .tg-wp8o{text-align:center;border-style:none;vertical-align:top}
   .tg .tg-mcqj{font-weight:bold; border-style:none;text-align:left;vertical-align:center}
+
+  .tgi  {border-collapse:collapse;border-spacing:0; text-align: center; padding-left: 60%; }
 
   

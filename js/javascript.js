@@ -4,6 +4,7 @@ let backImage = document.getElementById('bgLevel1');
 let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d')
 let audio = document.getElementById('gameSong');
+let avisos = ""
 
 canvas.width = 900;
 canvas.height = 500;
@@ -166,6 +167,7 @@ class Estadisitca {
         this.h = h;
     }
     draw() {
+        
         //SCORE 1
         //Dibuja Rectangulo Naranja de Cobertura
         ctx.beginPath();
@@ -188,6 +190,12 @@ class Estadisitca {
         ctx.lineWidth = 2;
         ctx.strokeText("Cobertura",(canvas.width/2)-93,75)
        
+        //AVISOS
+        ctx.beginPath();
+        ctx.font = "50px Verdana";
+        ctx.fillStyle = 'white';
+        ctx.fillText(avisos, (canvas.width/2)-80, 200);
+
         //SCORE 2
         //Dibuja Rectangulo Naranja de Edad
         ctx.beginPath();
@@ -358,6 +366,9 @@ function checkCollition() {
 function LevelUp (){
     if (frames % 66 == 0) {
         player.yearsOld += 1
+        if (frames % 99 == 0) {
+            avisos = "";
+        }
         //console.log(player.yearsOld)
         if ((frames > 600 && frames < 1100) || (frames > 1700 && frames < 2100) || (frames > 2700 && frames < 3100) || (frames > 3700 && frames < 4100)) {
             hurryUp += 1
@@ -373,21 +384,27 @@ function LevelUp (){
         player.speed -= 10
         arrayOfBadness=[] 
         backImage = document.getElementById('bgLevel'+level);
+        avisos = "Nivel "+ level
     }
     if (frames >= 4100 && frames<5000) {
         clearInterval(interval)
         alert('!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOldyearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.')
+        //avisos = '!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOldyearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.'
+        Estadisitca.draw();
         
     }
     if (frames >= 5000 ){
         clearInterval(interval)
         alert("Ya perdiste !!!  Te encontraras con la muerte a los " + player.yearsOld + " años de forma inesperada. Contrata un seguro de vida ahora y que no te agarre por sorpresa")
+        //avisos = "Ya perdiste !!!  Te encontraras con la muerte a los " + player.yearsOld + " años de forma inesperada. Contrata un seguro de vida ahora y que no te agarre por sorpresa"
+        Estadisitca.draw();
+        
     }
 }
 
 // FUNCIONES PRINCIPALES
 function startGame(){
-    player = new Hombre(375,360,95,100);
+    player = new Hombre(375,360,65,100);
     interval = setInterval(GameHart, 1000/60);
     audio.play();
 }
@@ -398,6 +415,9 @@ function gameOver() {
         //drawEstadisticas()
         clearInterval(interval);
         alert("Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld + ' años por falta de dinero. Asegurate con una cobertura mayor y extiende tu vida varios años más')
+        //avisos = "Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld + ' años por falta de dinero. Asegurate con una cobertura mayor y extiende tu vida varios años más'
+        Estadisitca.draw();
+        
     }  
     if (polizaCoverage < 0) {
         noCoverageFine = -10
