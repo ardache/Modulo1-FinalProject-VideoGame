@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Life Game - THB México</title>
+    <title>Life Game - by Ardash</title>
     <link rel="stylesheet" href="./style/stylesheets.css">
     
 </head>
@@ -12,7 +12,7 @@
     <div id="contenedor"></div>
     
     <canvas id="canvas" height="500px" width="900px"></canvas>
-
+    <audio id="gameSong" src="./fx/gameSong.ogg"></audio>
     <img style="display:none" id="bgLevel1" src="./img/bgLevel1.png"/>
     <img style="display:none" id="bgLevel2" src="./img/bgLevel2.jpg"/>
     <img style="display:none" id="bgLevel3" src="./img/bgLevel3.jpg"/>
@@ -22,39 +22,57 @@
     <img style="display:none" id="playerIzq" src="./img/srpiteGirlIzq.png"/>
     
     <h1>El gran juego de la Vida</h1>
-    <div class="flex-container" id="align-items-center">
-    <h2>Ganas dinero</h2>
-    <img id="coin" src="./img/coin.png"/> <span>MONEDA Ganas dinero</span>
-    </div>
-
-    <div class="flex-container" id="align-items-center">
-    <h2>Pierdes dinero</h2>
-    <img id="fiesta" src="./img/fiesta.png"/> <span>FIESTA</span>
-    <img id="avion" src="./img/avion.png"/> <span>VIAJE</span>
-    <img id="colegiatura" src="./img/colegiatura.png"/><span>COLEGIATURA</span>
-    <img id="medicina" src="./img/medicina.png"/><span>MEDICINAS</span>
-    </div>
-
-    <div class="flex-container" id="align-items-center"></div>
-    <h2>Pierdes dinero y disminuyes tu cobertura de tu seguro</h2>
-    <img id="enfermedad" src="./img/enfermedad.png"/><span>ENFERMEDAD</span>
-    <img id="accidente" src="./img/accidente.png"/><span>ACCIDENTE</span>
-    <img id="sarten" src="./img/sarten.png"/><span>SARTEN</span>
-    </div>
-
-    <div class="flex-container" id="align-items-center"></div>
-    <h2>Pierdes dinero, disminuyes tu cobertura de tu seguro y subes de nivel prematuramente</h2>
-    <img id="anillo" src="./img/anillo.png"/><span>BODA</span>
-    <img id="bebe" src="./img/bebe.png"/><span>BEBE</span>
-    <img id="rodilla" src="./img/rodilla.png"/><span>FRACTURA de RODILLA</span>
-    </div>
-
-    <div class="flex-container" id="align-items-center"></div>
-    <h2>Pierdes el juego</h2>
-    <img id="muerte" src="./img/muerte.png"/><span>MUERTE</span>
-    </div>
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section class="container">
+        <div class="flex-container">
+        <h2>Ganas dinero: </h2>
+        <img id="coin" src="./img/coin.png"/> <span>MONEDA</span>
+        </div>
+    
+        <div class="flex-container">
+        <h2>Pierdes dinero: </h2>
+        <img id="fiesta" src="./img/fiesta.png"/> <span>FIESTA</span>
+        <img id="avion" src="./img/avion.png"/> <span>VIAJE</span>
+        <img id="colegiatura" src="./img/colegiatura.png"/><span>COLEGIATURA</span>
+        <img id="medicina" src="./img/medicina.png"/><span>MEDICINAS</span>
+        </div>
+    </section>
+ 
+    <section class="container">
+        <div class="flex-container">
+        <h2>Pierdes dinero y baja la cobertura: </h2>
+        <img id="enfermedad" src="./img/enfermedad.png"/><span>ENFERMEDAD</span>
+        <img id="accidente" src="./img/accidente.png"/><span>ACCIDENTE</span>
+        <img id="sarten" src="./img/sarten.png"/><span>SARTEN</span>
+        </div>
+    
+        <div class="flex-container">
+        <h2>Subes de nivel prematuramente: </h2>
+        <img id="anillo" src="./img/anillo.png"/><span>BODA</span>
+        <img id="bebe" src="./img/bebe.png"/><span>BEBE</span>
+        <img id="rodilla" src="./img/rodilla.png"/><span>FRACTURA de RODILLA</span>
+        </div>
+    </section>
+    <section class="container"></section>
+        <div class="flex-container">
+        <h2>Pierdes el juego: </h2>
+        <img id="muerte" src="./img/muerte.png"/><span>MUERTE</span>
+        </div>
+    </section>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="endPage">
     <button id="start-button">Jugar !!!</button>
+    </div>
 </body>
 <script type="text/javascript" src="./js/javascript.js"></script>
 </html>

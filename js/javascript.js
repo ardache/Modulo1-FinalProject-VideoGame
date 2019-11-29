@@ -3,6 +3,8 @@
 let backImage = document.getElementById('bgLevel1');
 let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d')
+let audio = document.getElementById('gameSong');
+
 canvas.width = 900;
 canvas.height = 500;
 
@@ -321,14 +323,14 @@ function checkCollition() {
         if(player.crashWith(badness)) {
             acountBank += badness.bank + noCoverageFine
             //console.log ("menos " + badness.bank + " mas " + noCoverageFine)
-            console.log(badness.level)
+            //console.log(badness.level)
 
             if (badness.coverage < 0) {
                 polizaCoverage += badness.coverage
                 fxBlur += 3;
             }
             if (badness.level == 1){
-                console.log("nivel=" + level)
+                //console.log("nivel=" + level)
                 switch (level){
                     case 1:
                         frames = 1099;
@@ -387,6 +389,7 @@ function LevelUp (){
 function startGame(){
     player = new Hombre(375,360,95,100);
     interval = setInterval(GameHart, 1000/60);
+    audio.play();
 }
 
 // GameOver
@@ -414,7 +417,7 @@ function GameHart() {
     gameOver();
     LevelUp();
     frames++;
-    console.log(frames)
+    //console.log(frames)
 }
 
 // INSTANCIAS
