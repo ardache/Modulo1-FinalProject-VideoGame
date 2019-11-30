@@ -4,6 +4,9 @@ let backImage = document.getElementById('bgLevel1');
 let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d')
 let audio = document.getElementById('gameSong');
+let fxMoney = document.getElementById('fxcoin');
+let fxLevel = document.getElementById('fxlevel');
+
 let avisos = ""
 
 canvas.width = 900;
@@ -330,6 +333,9 @@ function checkCollition() {
     arrayOfBadness.forEach((badness, ei) => {
         if(player.crashWith(badness)) {
             acountBank += badness.bank + noCoverageFine
+            if (badness.bank > 1){
+                fxMoney.play();
+            }
             //console.log ("menos " + badness.bank + " mas " + noCoverageFine)
             //console.log(badness.level)
 
@@ -339,6 +345,7 @@ function checkCollition() {
             }
             if (badness.level == 1){
                 //console.log("nivel=" + level)
+                fxLevel.play();
                 switch (level){
                     case 1:
                         frames = 1099;
@@ -389,9 +396,9 @@ function LevelUp (){
     if (frames >= 4100 && frames<5000) {
         audio.pause()
         clearInterval(interval)
-        alert('!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOldyearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.')
+        alert('!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.')
         //avisos = '!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOldyearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.'
-        Estadisitca.draw();
+        drawEstadisticas();
         
     }
     if (frames >= 5000 ){
@@ -399,7 +406,7 @@ function LevelUp (){
         clearInterval(interval)
         alert("Ya perdiste !!!  Te encontraras con la muerte a los " + player.yearsOld + " años de forma inesperada. Contrata un seguro de vida ahora y que no te agarre por sorpresa")
         //avisos = "Ya perdiste !!!  Te encontraras con la muerte a los " + player.yearsOld + " años de forma inesperada. Contrata un seguro de vida ahora y que no te agarre por sorpresa"
-        Estadisitca.draw();
+        drawEstadisticas();
         
     }
 }
@@ -419,7 +426,7 @@ function gameOver() {
         clearInterval(interval);
         alert("Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld + ' años por falta de dinero. Asegurate con una cobertura mayor y extiende tu vida varios años más')
         //avisos = "Ya perdiste !!!  Con ese ritmo de vida moriras a los " + player.yearsOld + ' años por falta de dinero. Asegurate con una cobertura mayor y extiende tu vida varios años más'
-        Estadisitca.draw();
+        drawEstadisticas();
         
     }  
     if (polizaCoverage < 0) {
