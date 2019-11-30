@@ -399,6 +399,7 @@ function LevelUp (){
         alert('!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.')
         //avisos = '!!! Ganaste !!! Tu muerte sera de forma natural a los ' + player.yearsOldyearsOld + ' años, y con $' + acountBank * 1000 + ' pesos en tu bolsa.'
         drawEstadisticas();
+        console.log('Saludos a Raul, Harland y JP...')
         
     }
     if (frames >= 5000 ){
